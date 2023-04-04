@@ -1,0 +1,2 @@
+CREATE DATABASE shop_it_app
+USE notes_app
