@@ -1,6 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import UsersController from "../controller/users.controller";
 import Route from "../interfaces/router.interface";
+import validateSchema from "../middlewares/validateSchema";
+import { createUserSchema, verifyUserSchema } from "../schema/users.schema";
 
 class UserRoute implements Route {
   public path = "/users";
@@ -11,7 +13,16 @@ class UserRoute implements Route {
     this.initializeRoutes();
   }
   private initializeRoutes() {
-    this.router.post(`${this.path}/create`, this.usersController.createUser);
+    this.router.post(
+      `${this.path}/create`,
+      validateSchema(createUserSchema),
+      this.usersController.createUser
+    );
+    this.router.post(
+      `${this.path}/verify/:id/:code`,
+      validateSchema(verifyUserSchema),
+      this.usersController.verifyUser
+    );
   }
 }
 export default UserRoute;

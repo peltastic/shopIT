@@ -5,5 +5,6 @@ CREATE TABLE users (
     role ENUM('USER', 'ADMIN', 'VENDOR') DEFAULT 'USER',
     name VARCHAR(20) NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT FALSE,
-    verification_code INT
+    verification_code INT,
+    password_reset_code INT
 );
