@@ -8,9 +8,10 @@ class VendorModel {
     try {
         let conditions: {}[] = [];
         for (const el in data) {
+          console.log(data[el])
             conditions.push(data[el])
         }
-        let query = ``
+        let query = `INSERT INTO ${this.tableName} (user_id, vendor_name, address) VALUES(?, ?, ?)`
         return execute(query, conditions)
     } catch (error) {
       console.error("MySql Query Error", error);
