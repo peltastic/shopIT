@@ -15,5 +15,6 @@ export default {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD
     },
-    email: process.env.EMAIL
+    email: process.env.EMAIL,
+    jwt_private_key: process.env.JWT_PRIVATE_KEY
 }

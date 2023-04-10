@@ -8,7 +8,7 @@ class UserModel {
     try {
       let conditions: {}[] = [];
       conditions.push(email);
-      let query = `SELECT email FROM ${this.tableName} WHERE email = ?`;
+      let query = `SELECT email, id, password, role FROM ${this.tableName} WHERE email = ?`;
       return execute<User>(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
