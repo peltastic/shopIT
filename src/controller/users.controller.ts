@@ -27,7 +27,7 @@ class UsersController {
         throw new HttpException(409, "email already exixts");
       }
       const hashedPassword = await bcrypt.hash(password, 14);
-      await this.userService.createUser([email, hashedPassword, name, verificationCode.toString()]);
+      await this.userService.createUser([email, hashedPassword, name, verificationCode.toString(), JSON.stringify(["USER"])] );
       sendMail({
         from: config.get("email"),
         to: email,
@@ -49,11 +49,9 @@ class UsersController {
       if (!user) {
         throw new HttpException(400, "Could Not verifyUser");
       }
-      console.log(user[0].verified);
       if ( user[0].verified) {
         throw new HttpException(400, "User is Already Verified")
       }
-      console.log(Number(user[0].verified) === Number(code))
       if (Number(user[0].verification_code) === Number(code) ) {
         this.userService.verifyUser(Number(id))
         return res.status(200).json({

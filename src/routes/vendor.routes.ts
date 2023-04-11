@@ -4,12 +4,14 @@ import Route from "../interfaces/router.interface";
 import validateSchema from "../middlewares/validateSchema";
 import { createVendorSchema } from "../schema/vendor.schema";
 import AuthorizeUser from "../middlewares/authorizeUser.middleware";
+import Permissions from "../middlewares/permissions.middleware";
 
 class VendorRoute implements Route {
   public path = "/vendor";
   public router = Router();
   public vendorController = new VendorController();
   public authorization = new AuthorizeUser();
+  public deleteVendorPermissions = new Permissions(["VENDOR, ADMIN"])
   constructor() {
     this.initializeRoutes();
   }
@@ -19,6 +21,16 @@ class VendorRoute implements Route {
       validateSchema(createVendorSchema),
       this.authorization.authorize,
       this.vendorController.createVendor
+    );
+    this.router.get(
+      `${this.path}/shop/:id`,
+      this.vendorController.getVendorProfile
+    );
+    this.router.delete(
+      `${this.path}`,
+      this.authorization.authorize,
+      this.deleteVendorPermissions.checkPermissions,
+      this.vendorController.deleteVendorProfile
     );
   }
 }

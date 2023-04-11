@@ -27,7 +27,7 @@ class AuthController {
       const payload = {
         email: user[0]?.email,
         id: user[0]?.id,
-        role: user[0]?.role
+        role: user[0]?.roles
       }
       const token = this.jwt.signJwt(payload);
       return res.status(200).json({

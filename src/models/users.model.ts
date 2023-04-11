@@ -8,7 +8,7 @@ class UserModel {
     try {
       let conditions: {}[] = [];
       conditions.push(email);
-      let query = `SELECT email, id, password, role FROM ${this.tableName} WHERE email = ?`;
+      let query = `SELECT email, id, passwords, roles FROM ${this.tableName} WHERE email = ?`;
       return execute<User>(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
@@ -38,16 +38,27 @@ class UserModel {
       return null;
     }
   }
-  public async createNewUser(data: string[]) {
+  public async createNewUser(data: (string | string[])[]) {
     try {
       let conditions: {}[] = [];
       for (const el of data) {
         conditions.push(el);
-        console.log(el)
       }
-      let query = `INSERT INTO ${this.tableName} (email, password, name, verification_code) 
-      VALUES (?, ?, ?, ?)`;
+      let query = `INSERT INTO ${this.tableName} (email, passwords, names, verification_code, roles) 
+      VALUES (?, ?, ?, ?, ?)`;
+      console.log(conditions)
       return execute(query, conditions);
+    } catch (error) {
+      console.error("MySql Query Error", error);
+      return null;
+    }
+  }
+    public async updateVendor(id: number) {
+    try {
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `UPDATE ${this.tableName} SET role = ["USER","VENDOR"] WHERE id = ?`
+      return execute(query, conditions)
     } catch (error) {
       console.error("MySql Query Error", error);
       return null;

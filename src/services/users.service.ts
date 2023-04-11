@@ -13,12 +13,15 @@ class UserService {
     if (user) return user;
     return null;
   }
-  public async createUser(data: string[]) {
+  public async createUser(data: (string | string[])[]) {
     await this.users.createNewUser(data);
   }
   public async verifyUser(id: number) {
     await this.users.verifyUser(id);
   }
+  public async updateVendor(id: number) {
+    await this.users.updateVendor(id)
+}
 }
 
 export default UserService;

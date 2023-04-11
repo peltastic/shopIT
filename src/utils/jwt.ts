@@ -7,7 +7,9 @@ class Jwt {
         this.jwtPrivateKey = config.get("jwt_private_key")
     }
     public signJwt (payload: Object) {
-       const token = jwt.sign(payload, this.jwtPrivateKey)
+       const token = jwt.sign(payload, this.jwtPrivateKey, {
+        expiresIn: "1h"
+       })
         return token
     }
     public verifyJwt<T>(token: string): T | null {

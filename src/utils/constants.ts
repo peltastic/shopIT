@@ -1,5 +1,5 @@
-export const roles = {
-    ADMIN: "ADMIN",
-    USER: "USER",
-    VENDOR: "VENDOR"
-}
+export const roles =[
+     "ADMIN",
+    "USER",
+    "VENDOR"
+]
