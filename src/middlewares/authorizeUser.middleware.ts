@@ -3,6 +3,7 @@ import { TokenExpiredError } from "jsonwebtoken";
 import HttpException from "../exceptions/HttpException";
 import Jwt from "../utils/jwt";
 import { IJwtExpectedPayload } from "../interfaces/jwt.interfaces";
+import { IAddUserToRequest } from "../interfaces/request.interface";
 
 class AuthorizeUser {
   public jwt = new Jwt();
@@ -17,7 +18,7 @@ class AuthorizeUser {
     next(new HttpException(401, "Unauthorized"));
   };
   public authorize = async (
-    req: Request,
+    req:  Request,
     res: Response,
     next: NextFunction
   ) => {
@@ -30,10 +31,10 @@ class AuthorizeUser {
     if (!token) {
       next(new HttpException(403, "No token Provided!"));
     }
-    let decoded;
+    let decoded
     try {
       decoded = this.jwt.verifyJwt<IJwtExpectedPayload>(token);
-      res.locals.payload = decoded;
+      (req as IAddUserToRequest).user = decoded
       next();
     } catch (err) {
       if (err) {
@@ -41,27 +42,6 @@ class AuthorizeUser {
       }
     }
   };
-  // public isAdmin = async (req: Request, res: Response, next: NextFunction) => {
-  //   const role = res.locals.payload.roles;
-  //   if (role === roles.ADMIN) {
-  //     next();
-  //   }
-  //   next(new HttpException(403, "Forbidden to access this resource"));
-  // };
-  // public isVendor = async (req: Request, res: Response, next: NextFunction) => {
-  //   const role = res.locals.payload.role;
-  //   if (role === roles.VENDOR) {
-  //     next();
-  //   }
-  //   next(new HttpException(403, "Forbidden to access this resource"));
-  // };
-  // public isUser = async (req: Request, res: Response, next: NextFunction) => {
-  //   const role = res.locals.payload.role;
-  //   if (role === roles.USER) {
-  //     next();
-  //   }
-  //   next(new HttpException(403, "Forbidden to access this resource"));
-  // };
 }
 
 export default AuthorizeUser;

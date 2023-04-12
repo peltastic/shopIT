@@ -19,9 +19,8 @@ class AuthController {
       if (user?.length === 0) {
         throw new HttpException(400, "Inavlid Email or Password");
       }
-      const passwordIsValid = await bcrypt.compare(password, user[0]?.password);
+      const passwordIsValid = await bcrypt.compare(password, user[0]?.passwords);
       if (!passwordIsValid) {
-        console.log(passwordIsValid);
         throw new HttpException(400, "Invalid Email or Password");
       }
       const payload = {

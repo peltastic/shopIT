@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { roles } from "../utils/constants";
 import HttpException from "../exceptions/HttpException";
+import { IAddUserToRequest } from "../interfaces/request.interface";
 
 class Permissions {
   private permissions: string[];
@@ -13,13 +14,12 @@ class Permissions {
     res: Response,
     next: NextFunction
   ) => {
-    const allPermissions = roles;
-    const hasPermission = this.permissions.some((role) =>
-      allPermissions.includes(role)
+    const hasPermission = (req as IAddUserToRequest).user?.role.some((role: any) =>
+    this.permissions.includes(role)
     );
-    console.log(hasPermission);
+
     if (hasPermission) {
-      next();
+      return next();
     }
     next(new HttpException(403, "Forbidden to access this resource"));
   };

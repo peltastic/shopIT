@@ -7,7 +7,7 @@ class VendorController {
   public vendorService = new VendorService();
   public userService  = new UserService()
   public createVendor = async (
-    req: Request<{}, {}, CreateVendorInput>,
+    req: Request,
     res: Response,
     next: NextFunction
   ) => {
@@ -19,7 +19,6 @@ class VendorController {
         address,
       });
       await this.userService.updateVendor(Number(user_id));
-      res.locals.payload.role = ["USER","VENDOR"]
       return res.status(201).json({
         status: true,
         Message: "vendor created successfully",
@@ -43,17 +42,17 @@ class VendorController {
       } catch (error) {
         next(error)
       }
-  }
+    }
   public deleteVendorProfile = async (
     req: Request,
     res: Response,
     next: NextFunction
-  ) => {
-    const {userId} = req.params
-    try {
-      await this.vendorService.deleteVendor(Number(userId))
-      return res.status(200).json({
-        status: true,
+    ) => {
+      const {userId} = req.params
+      try {
+        await this.vendorService.deleteVendor(Number(userId))
+        return res.status(200).json({
+          status: true,
         message: "Profile deleted successfully"
       })
     } catch (error) {

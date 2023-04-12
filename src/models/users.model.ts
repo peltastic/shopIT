@@ -57,7 +57,7 @@ class UserModel {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
-      let query = `UPDATE ${this.tableName} SET role = ["USER","VENDOR"] WHERE id = ?`
+      let query = `UPDATE ${this.tableName} SET roles = '["VENDOR"]' WHERE id = ?`
       return execute(query, conditions)
     } catch (error) {
       console.error("MySql Query Error", error);

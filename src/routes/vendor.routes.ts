@@ -11,7 +11,7 @@ class VendorRoute implements Route {
   public router = Router();
   public vendorController = new VendorController();
   public authorization = new AuthorizeUser();
-  public deleteVendorPermissions = new Permissions(["VENDOR, ADMIN"])
+  public deleteVendorPermissions = new Permissions(["VENDOR", "ADMIN"]);
   constructor() {
     this.initializeRoutes();
   }
@@ -27,7 +27,7 @@ class VendorRoute implements Route {
       this.vendorController.getVendorProfile
     );
     this.router.delete(
-      `${this.path}`,
+      `${this.path}/delete/:userId`,
       this.authorization.authorize,
       this.deleteVendorPermissions.checkPermissions,
       this.vendorController.deleteVendorProfile
