@@ -5,7 +5,7 @@ import Jwt from "../utils/jwt";
 import { IJwtExpectedPayload } from "../interfaces/jwt.interfaces";
 import { IAddUserToRequest } from "../interfaces/request.interface";
 
-class AuthorizeUser {
+class AuthorizeUserMiddleware {
   public jwt = new Jwt();
   private catchTokenExpiredError = (
     err: any,
@@ -44,4 +44,4 @@ class AuthorizeUser {
   };
 }
 
-export default AuthorizeUser;
+export default AuthorizeUserMiddleware;

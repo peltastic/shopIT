@@ -7,7 +7,7 @@ class VendorController {
   public vendorService = new VendorService();
   public userService  = new UserService()
   public createVendor = async (
-    req: Request,
+    req: Request<{}, {}, CreateVendorInput>,
     res: Response,
     next: NextFunction
   ) => {

@@ -46,7 +46,6 @@ class UserModel {
       }
       let query = `INSERT INTO ${this.tableName} (email, passwords, names, verification_code, roles) 
       VALUES (?, ?, ?, ?, ?)`;
-      console.log(conditions)
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
