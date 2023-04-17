@@ -24,6 +24,10 @@ class ProductRoute implements Route {
       this.createProductPermissionns.checkPermissions,
       this.productController.createProduct
     );
+    this.router.get(
+      `${this.path}/all`,
+      this.productController.getAllProducts
+    )
   }
 }
 

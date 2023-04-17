@@ -11,7 +11,7 @@ export const createProductSchema = object({
     price: string({
       required_error: "Price of Product is Required",
     }),
-    flags: string().array().nonempty(),
+    category: string(),
     image_urls: string().array().nonempty(),
     vendor_id: string(),
   }),

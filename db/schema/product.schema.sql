@@ -3,7 +3,7 @@ CREATE TABLE products (
     names VARCHAR(255) NOT NULL,
     descriptions TEXT NOT NULL,
     price INT NOT NULL,
-    flags ENUM("tech", "clothes", "cosmetics", "food", "drinks", "wine"),
+    category ENUM("tech", "clothes", "cosmetics", "food", "drinks", "wine", "tech accessories"),
     image_url JSON,
     vendor_id INT,
     FOREIGN KEY (vendor_id) REFERENCES vendor_profiles(id),
