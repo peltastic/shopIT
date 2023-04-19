@@ -33,7 +33,6 @@ class UserModel {
       let query = `UPDATE ${this.tableName} SET verified = true WHERE id = ?`
       return execute(query, conditions)
     } catch (error) {
-
       console.error("MySql Query Error", error);
       return null;
     }
