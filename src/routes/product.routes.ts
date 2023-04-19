@@ -12,6 +12,7 @@ class ProductRoute implements Route {
   public productController = new ProductController();
   public authorizationMiddleware = new AuthorizeUserMiddleware();
   public createProductPermissionns = new Permissions(["VENDOR"]);
+  public deleteProductPermissions = new Permissions(["VENDOR", "ADMIN"]);
   constructor() {
     this.initializeRoutes();
   }
@@ -24,10 +25,21 @@ class ProductRoute implements Route {
       this.createProductPermissionns.checkPermissions,
       this.productController.createProduct
     );
+    this.router.get(`${this.path}/all`, this.productController.getAllProducts);
     this.router.get(
-      `${this.path}/all`,
-      this.productController.getAllProducts
-    )
+      `${this.path}/vendor/:vendorId`,
+      this.productController.getVendorProducts
+    );
+    this.router.get(
+      `${this.path}/:productId`,
+      this.productController.getProduct
+    );
+    this.router.delete(
+      `${this.path}/delete/:productId`,
+      this.authorizationMiddleware.authorize,
+      this.deleteProductPermissions.checkPermissions,
+      this.productController.deleteProduct
+    );
   }
 }
 

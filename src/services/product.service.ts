@@ -7,12 +7,19 @@ class ProductService {
         await this.products.createNewProduct(data)
     }
     public async getAllProducts(queries: IGetAllProductsQuery) {
-        const res = this.products.getProducts(queries)
+        const res = await this.products.getProducts(queries)
         return res
     }
-    public async getVendorsProduct (queries: IGetVendorProductsQuery) {
-        const res = this.products.getVendorProducts(queries)
+    public async getAllVendorsProducts (queries: IGetVendorProductsQuery) {
+        const res = await this.products.getVendorProducts(queries)
         return res
+    }
+    public async getProduct (id: number) {
+        const res = await this.products.getSingleProduct(id)
+        return res
+    }
+    public async deleteProduct (id: number) {
+        await this.products.deleteProduct(id)
     }
 }
 

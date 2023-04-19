@@ -33,7 +33,6 @@ class VendorModel {
     try {
       let conditions: {}[] = []
       conditions.push(id)
-      console.log(id, conditions)
       let query = `DELETE FROM ${this.tableName} WHERE id = ?`
       return execute(query, conditions)
     } catch (error) {
