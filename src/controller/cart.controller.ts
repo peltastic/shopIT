@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { CreateCartInput } from "../schema/cart.schema";
 import CartService from "../services/cart.service";
-import HttpException from "../exceptions/HttpException";
+import { IAddUserToRequest } from "../interfaces/request.interface";
 
 class CartController {
   public cartService = new CartService();
@@ -10,11 +10,17 @@ class CartController {
     res: Response,
     next: NextFunction
   ) => {
-    const { name, price, product_id, user_id } = req.body;
+    const { name, price, product_id, cart_price } = req.body;
     try {
-      await this.cartService.createCart([name, price, product_id, user_id]);
+      await this.cartService.createCart([
+        name,
+        price,
+        cart_price,
+        product_id,
+        (req as IAddUserToRequest).user?.id as string,
+      ]);
       return res.status(200).json({
-        status: false,
+        status: true,
         message: "Cart Created Successfully",
       });
     } catch (error) {
@@ -44,12 +50,11 @@ class CartController {
   ) => {
     const { cartId } = req.params;
     try {
-      const cart: any = await this.cartService.getSingleCart(Number(cartId));
-      console.log(cart[0]);
-      if (cart[0].product_count < 1) {
-        throw new HttpException(400, "Cart Count at 0, can't go below that");
-      }
       await this.cartService.decreaseCartCount(Number(cartId));
+      const cart: any = await this.cartService.getSingleCart(Number(cartId));
+      if (cart[0]?.product_count === 0) {
+        await this.cartService.deleteCart(Number(cartId));
+      }
       return res.status(200).json({
         status: true,
         message: "cart count decreased successfully",

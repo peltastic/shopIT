@@ -8,11 +8,11 @@ export const createCartSchema = object({
     price: number({
       required_error: "Price is Required",
     }),
+    cart_price: number({
+      required_error: "Price is Required",
+    }),
     product_id: string({
       required_error: "Product Id is required",
-    }),
-    user_id: string({
-      required_error: "User Id is Required",
     }),
   }),
 });

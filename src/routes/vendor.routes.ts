@@ -27,7 +27,7 @@ class VendorRoute implements Route {
       this.vendorController.getVendorProfile
     );
     this.router.delete(
-      `${this.path}/delete/:userId4`,
+      `${this.path}/delete/:userId`,
       this.authorizationMiddleware.authorize,
       this.deleteVendorPermissions.checkPermissions,
       this.vendorController.deleteVendorProfile

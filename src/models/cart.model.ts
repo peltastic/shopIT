@@ -8,7 +8,7 @@ class CartModel {
       conditions.push(el);
     }
     try {
-      let query = `INSERT INTO ${this.tableName} (name, price, product_id, user_id) VALUES (?, ?, ?, ?, ?)`;
+      let query = `INSERT INTO ${this.tableName} (name, price, cart_price, product_id, user_id) VALUES (?, ?, ?, ?, ?)`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
@@ -19,18 +19,19 @@ class CartModel {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
-      let query = `UPDATE ${this.tableName} SET product_count = product_count + 1 WHERE id = ?`;
+      let query = `UPDATE ${this.tableName} SET product_count = product_count + 1, cart_price = cart_price + price WHERE id = ?`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
       return null;
     }
   }
+  
   public async decreaseCartCount(id: number) {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
-      let query = `UPDATE ${this.tableName} SET product_count = product_count - 1 WHERE id = ?`;
+      let query = `UPDATE ${this.tableName} SET product_count = product_count - 1, cart_price = cart_price - price WHERE id = ?`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);

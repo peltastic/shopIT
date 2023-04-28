@@ -9,7 +9,8 @@ class CartService {
         await this.cartModel.increaseCartCount(id)
     }
     public async decreaseCartCount(id: number) {
-        await this.cartModel.decreaseCartCount(id)
+        const res = await this.cartModel.decreaseCartCount(id)
+        return res
     }
     public async getUserCarts (id: number) {
         const res = await this.cartModel.getUserCarts(id)
