@@ -16,5 +16,9 @@ export default {
         pass: process.env.PASSWORD
     },
     email: process.env.EMAIL,
-    jwt_private_key: process.env.JWT_PRIVATE_KEY
+    jwt_private_key: process.env.JWT_PRIVATE_KEY,
+    paystack_hostname: process.env.PAYSTACK_HOSTNAME,
+    paystack_port: process.env.PAYSTACK_PORT,
+    paystack_secret_key: process.env.PAYSTACK_SECRET_KEY,
+    
 }
