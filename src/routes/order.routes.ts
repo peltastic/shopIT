@@ -16,6 +16,10 @@ class OrderRoute implements Route {
       `${this.path}/paystack`,
       this.orderPaystackController.initializePayment
     );
+    this.router.get(
+      `${this.path}/paystack/verify`,
+      this.orderPaystackController.verifyPayment
+    );
   }
 }
 
