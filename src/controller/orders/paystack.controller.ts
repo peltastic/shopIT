@@ -11,7 +11,7 @@ class OrderWithPaystackController {
     next: NextFunction
   ) => {
     const { customerEmail, amount, vendorEmail } = req.body;
-    const transaction_reference = uuidv4();
+    // const transaction_reference = uuidv4();
     try {
       const { data } = await this.paystackService.initializeTransaction({
         email: customerEmail,
