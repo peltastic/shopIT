@@ -10,13 +10,14 @@ class CartController {
     res: Response,
     next: NextFunction
   ) => {
-    const { name, price, product_id, cart_price } = req.body;
+    const { name, price, product_id, cart_price, vendor_id } = req.body;
     try {
       await this.cartService.createCart([
         name,
         price,
         cart_price,
         product_id,
+        vendor_id,
         (req as IAddUserToRequest).user?.id as string,
       ]);
       return res.status(200).json({

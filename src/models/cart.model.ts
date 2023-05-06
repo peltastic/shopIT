@@ -8,7 +8,7 @@ class CartModel {
       conditions.push(el);
     }
     try {
-      let query = `INSERT INTO ${this.tableName} (name, price, cart_price, product_id, user_id) VALUES (?, ?, ?, ?, ?)`;
+      let query = `INSERT INTO ${this.tableName} (name, price, cart_price, product_id, vendor_id, user_id) VALUES (?, ?, ?, ?, ?, ?)`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);

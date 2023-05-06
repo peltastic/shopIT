@@ -14,7 +14,8 @@ class PayStackWebhook {
       if (!verifyPayStackWebhookEvent(eventData, signature)) {
         throw new HttpException(400, "Error Verifying Paystack Webhook Event Data");
       }
-
+      
+      console.log(eventData)
       if (eventData.event === "charge.success") {
         const transactionId = eventData.data.id;
         // Process the successful transaction to maybe fund wallet and update your WalletModel

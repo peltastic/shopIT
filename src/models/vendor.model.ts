@@ -20,10 +20,10 @@ class VendorModel {
   }
   public async findVendor(id: number) {
     try {
-      let conditions: {}[] = []
-      conditions.push(id)
-      let query = `SELECT * FROM ${this.tableName} WHERE id = ?`
-      return execute(query, conditions)
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `SELECT * FROM ${this.tableName} WHERE id = ?`;
+      return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
       return null;
@@ -31,9 +31,31 @@ class VendorModel {
   }
   public async deleteVendor(id: number) {
     try {
-      let conditions: {}[] = []
-      conditions.push(id)
-      let query = `DELETE FROM ${this.tableName} WHERE id = ?`
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `DELETE FROM ${this.tableName} WHERE id = ?`;
+      return execute(query, conditions);
+    } catch (error) {
+      console.error("MySql Query Error", error);
+      return null;
+    }
+  }
+  public async getVendorBalance(email: string) {
+    try {
+      let conditions: {}[] = [];
+      conditions.push(email);
+      let query = `SELECT amount_earned FROM ${this.tableName} WHERE email = ?`;
+      return execute(query, conditions);
+    } catch (error) {
+      console.error("MySql Query Error", error);
+      return null;
+    }
+  }
+  public async updateVendorBalance(id: number, price: number) {
+    try {
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `UPDATE ${this.tableName} SET amount_earned = amount_earned + ${price}`;
       return execute(query, conditions)
     } catch (error) {
       console.error("MySql Query Error", error);

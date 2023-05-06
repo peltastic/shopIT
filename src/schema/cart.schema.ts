@@ -14,6 +14,9 @@ export const createCartSchema = object({
     product_id: string({
       required_error: "Product Id is required",
     }),
+    vendor_id: string({
+      required_error: "Product Id is required",
+    }),
   }),
 });
 

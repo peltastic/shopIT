@@ -9,7 +9,7 @@ const test_header = {
 };
 
 class PayStackService {
-  public async initializeTransaction(body: IPaystackTransactionPayload) {
+  public async initializeTransaction(body: any) {
     return await axios.post(`${paystackURL}/transaction/initialize`, body, {
       headers: test_header,
     });
