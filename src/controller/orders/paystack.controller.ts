@@ -3,6 +3,7 @@ import config from "config";
 import PayStackService from "../../services/paystack";
 import CartService from "../../services/cart.service";
 import { IAddUserToRequest } from "../../interfaces/request.interface";
+import { removeDuplicates } from "../../utils/helpers";
 
 class OrderWithPaystackController {
   public paystackService = new PayStackService();
@@ -12,7 +13,7 @@ class OrderWithPaystackController {
     res: Response,
     next: NextFunction
   ) => {
-    const { customerEmail} = req.body;
+    const { customerEmail } = req.body;
     let cartValue = "";
     let prices = [];
     let cartIds = [];
@@ -28,14 +29,14 @@ class OrderWithPaystackController {
         vendorIds.push(item.vendor_id);
       }
       const totalAmount = prices.reduce((prev, curr) => prev + curr, 0);
-      console.log(cartIds, vendorIds, cartValue, totalAmount)
+      console.log(cartIds, vendorIds, cartValue, totalAmount);
       const { data } = await this.paystackService.initializeTransaction({
         email: customerEmail,
         amount: (totalAmount * 100).toString(),
         // callback_url: `http://localhost:8000/order/paystack/verify`,
         metadata: {
           cartIds: JSON.stringify(cartIds),
-          vendorIds: JSON.stringify(vendorIds),
+          vendorIds: JSON.stringify(removeDuplicates(vendorIds)),
           custom_fields: [
             {
               display_name: "Cart Items",

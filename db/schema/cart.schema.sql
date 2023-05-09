@@ -10,4 +10,4 @@ CREATE TABLE carts (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (vendor_id) REFERENCES vendor_profiles(id)
-)
+);

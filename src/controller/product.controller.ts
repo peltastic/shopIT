@@ -5,10 +5,11 @@ import {
   IGetAllProductsQuery,
   IGetVendorProductsQuery,
 } from "../interfaces/products.interfaces";
+import VendorService from "../services/vendor.service";
 
 class ProductController {
   public productService = new ProductService();
-
+  public vendorService = new VendorService();
   public createProduct = async (
     req: Request<{}, {}, CreateProductInput>,
     res: Response,
@@ -25,6 +26,7 @@ class ProductController {
         JSON.stringify(image_urls),
         Number(vendor_id),
       ]);
+      await this.vendorService.updateVendorProductsCount(Number(vendor_id));
       return res.status(201).json({
         status: true,
         Message: "product created successfully",
@@ -72,7 +74,7 @@ class ProductController {
     next: NextFunction
   ) => {
     const { vendorId } = req.params;
-    const { limit, page, category, price } = req.query
+    const { limit, page, category, price } = req.query;
     const queries: IGetVendorProductsQuery = {
       id: Number(vendorId),
       offset: 0,
@@ -90,13 +92,13 @@ class ProductController {
       queries.price = Number(price);
     }
     try {
-      const products = await this.productService.getAllVendorsProducts(queries)
+      const products = await this.productService.getAllVendorsProducts(queries);
       return res.status(200).json({
         status: true,
-        data: products
-      })
+        data: products,
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   };
   public getProduct = async (
@@ -104,34 +106,33 @@ class ProductController {
     res: Response,
     next: NextFunction
   ) => {
-    const {productId} = req.params
+    const { productId } = req.params;
     try {
-      const product = await this.productService.getProduct(Number(productId))
+      const product = await this.productService.getProduct(Number(productId));
       return res.status(200).json({
         status: true,
-        data: product
-      })
-
-    }catch(error) {
-      next(error)
+        data: product,
+      });
+    } catch (error) {
+      next(error);
     }
-  }
+  };
   public deleteProduct = async (
     req: Request,
     res: Response,
     next: NextFunction
-    ) => {
-    const {productId} = req.params
+  ) => {
+    const { productId } = req.params;
     try {
-        await this.productService.deleteProduct(Number(productId))
-        return res.status(200).json({
-          status: true,
-          message: "Product deleted successfully"
-        })
-    }catch (error) {
-      next(error)
+      await this.productService.deleteProduct(Number(productId));
+      return res.status(200).json({
+        status: true,
+        message: "Product deleted successfully",
+      });
+    } catch (error) {
+      next(error);
     }
-  }
+  };
 }
 
 export default ProductController;

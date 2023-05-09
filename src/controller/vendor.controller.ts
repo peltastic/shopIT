@@ -11,12 +11,13 @@ class VendorController {
     res: Response,
     next: NextFunction
   ) => {
-    const { user_id, vendor_name, address } = req.body;
+    const { user_id, vendor_name, address, email } = req.body;
     try {
       await this.vendorService.createVendor({
         user_id: Number(user_id),
         vendor_name,
         address,
+        email
       });
       await this.userService.updateVendor(Number(user_id));
       return res.status(201).json({

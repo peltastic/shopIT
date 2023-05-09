@@ -15,6 +15,17 @@ class UserModel {
       return null;
     }
   }
+  public async findVendorUserEmail (id: number) {
+    try {
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `SELECT email FROM ${this.tableName} WHERE id = ?`;
+      return execute(query, conditions);
+    } catch (error) {
+      console.error("MySql Query Error", error);
+      return null;
+    }
+  }
   public async getUserVerificationCred(id: number) {
     try {
       let conditions: {}[] = []

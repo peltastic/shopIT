@@ -10,7 +10,10 @@ export const createVendorSchema = object({
         }),
         address: string({
             required_error: "Address is Required"
-        })
+        }),
+        email: string({
+            required_error: "Email is Required"
+        }).email()
     })
 })
 
