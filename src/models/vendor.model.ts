@@ -18,11 +18,12 @@ class VendorModel {
       return null;
     }
   }
-  public async findVendor(id: number) {
+  public async findVendor(id: number, returnOnlyEmail?: boolean) {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
-      let query = `SELECT * FROM ${this.tableName} WHERE id = ?`;
+      const returnType = returnOnlyEmail ? `email` : `*`
+      let query = `SELECT ${returnType} FROM ${this.tableName} WHERE id = ?`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);

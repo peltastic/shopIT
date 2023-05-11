@@ -13,6 +13,10 @@ class UserService {
     if (user) return user;
     return null;
   }
+  public async findUserById(id: number) {
+    const res = await this.users.findUserById(id)
+    return res
+  }
   public async createUser(data: (string | string[])[]) {
     await this.users.createNewUser(data);
   }
@@ -22,15 +26,7 @@ class UserService {
   public async updateVendor(id: number) {
     await this.users.updateVendor(id);
   }
-  public async getVendorUserEmails(ids: number[]) {
-    console.log(ids, "ids")
-    const emails = [];
-    for (const el of ids) {
-      const email: any = await this.users.findVendorUserEmail(el);
-      emails.push(email[0]?.email);
-    }
-    return emails;
-  }
+
 }
 
 export default UserService;

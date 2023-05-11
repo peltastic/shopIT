@@ -18,4 +18,15 @@ const sendMail = (data: any) => {
   })
 };
 
+const sendMultipleMailToVendors = (data: any) => {
+  for (const el of data) {
+
+    sendMail({
+      from: config.get("email"),
+      to: el.email,
+      subject: "Incoming Order"
+    })
+  }
+} 
+
 export default sendMail

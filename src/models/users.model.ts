@@ -15,7 +15,19 @@ class UserModel {
       return null;
     }
   }
-  public async findVendorUserEmail (id: number) {
+
+  public async findUserById(id: number) {
+    try {
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `SELECT * FROM ${this.tableName} WHERE id = ?`;
+      return execute(query, conditions);
+    } catch (error) {
+      console.error("MySql Query Error", error);
+      return null;
+    }
+  }
+  public async findVendorUserEmail(id: number) {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
@@ -28,21 +40,21 @@ class UserModel {
   }
   public async getUserVerificationCred(id: number) {
     try {
-      let conditions: {}[] = []
-      conditions.push(id)
-      let query = `SELECT email, verified, verification_code FROM ${this.tableName} WHERE id = ?`
-      return execute<User>(query, conditions)
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `SELECT email, verified, verification_code FROM ${this.tableName} WHERE id = ?`;
+      return execute<User>(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
-      return null
+      return null;
     }
   }
   public async verifyUser(id: number) {
     try {
-      let conditions: {}[] = []
-      conditions.push(id)
-      let query = `UPDATE ${this.tableName} SET verified = true WHERE id = ?`
-      return execute(query, conditions)
+      let conditions: {}[] = [];
+      conditions.push(id);
+      let query = `UPDATE ${this.tableName} SET verified = true WHERE id = ?`;
+      return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
       return null;
@@ -62,12 +74,12 @@ class UserModel {
       return null;
     }
   }
-    public async updateVendor(id: number) {
+  public async updateVendor(id: number) {
     try {
       let conditions: {}[] = [];
       conditions.push(id);
-      let query = `UPDATE ${this.tableName} SET roles = '["VENDOR"]' WHERE id = ?`
-      return execute(query, conditions)
+      let query = `UPDATE ${this.tableName} SET roles = '["VENDOR"]' WHERE id = ?`;
+      return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
       return null;
