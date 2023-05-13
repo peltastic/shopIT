@@ -2,9 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { verifyPayStackWebhookEvent } from "../../utils/paystack";
 import HttpException from "../../exceptions/HttpException";
 import VendorService from "../../services/vendor.service";
+import { sendMultipleMailToVendors } from "../../utils/mailer";
+import OrderService from "../../services/orders.service";
+import CartService from "../../services/cart.service";
 
 class PayStackWebhook {
   public vendorService = new VendorService();
+  public orderService = new OrderService()
+  public cartService = new CartService()
   public paystackWebhookHandler = async (
     req: Request,
     res: Response,
@@ -29,6 +34,10 @@ class PayStackWebhook {
         //   JSON.parse(eventData.data?.metadata?.vendorIds)
         // );
         console.log(JSON.parse(eventData.data?.metadata?.data), "csmdsm");
+        const data = JSON.parse(eventData.data?.metadata?.data)
+        sendMultipleMailToVendors(data)
+        await this.orderService.createNewOrderRecords(data)
+        await this.cartService.deleteMultipleCarts(data)
       }
 
       return res.sendStatus(200);

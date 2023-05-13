@@ -10,23 +10,23 @@ const sendMail = (data: any) => {
   const transporter = nodemailer.createTransport(email_config);
   transporter.sendMail(data, (err, info) => {
     if (err) {
-        console.log(err)
+      console.log(err);
     } else {
-        console.log(info.response)
-        return info.response
+      console.log(info.response);
+      return info.response;
     }
-  })
+  });
 };
 
-const sendMultipleMailToVendors = (data: any) => {
+export const sendMultipleMailToVendors = (data: any) => {
   for (const el of data) {
-
     sendMail({
       from: config.get("email"),
-      to: el.email,
-      subject: "Incoming Order"
-    })
+      to: el.vendorEmail,
+      subject: "Incoming Order",
+      text: `Order From ${el.user?.names}, ordered: "${el.name}" x${el.product_count} at N${el.cart_price}`,
+    });
   }
-} 
+};
 
-export default sendMail
+export default sendMail;

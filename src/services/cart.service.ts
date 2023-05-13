@@ -19,6 +19,11 @@ class CartService {
     public async deleteCart (id: number) {
         await this.cartModel.deleteCart(id)
     }
+    public async deleteMultipleCarts (data: any[]) {
+        for (const el of data) {
+            await this.cartModel.deleteCart(el.id)
+        }
+    }
     public async getSingleCart(id: number) {
         const res = await this.cartModel.getSingleCart(id)
         return res
