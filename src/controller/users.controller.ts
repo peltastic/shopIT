@@ -23,10 +23,12 @@ class UsersController {
       const emailIsRegistered: any = await this.userService.findUserByEmail(
         email
       );
-      if (!(emailIsRegistered.length === 0)) {
-        throw new HttpException(409, "email already exixts");
+      console.log(emailIsRegistered.rows)
+      if (!(emailIsRegistered.rows.length === 0)) {
+        throw new HttpException(409, "email already exists");
       }
       const hashedPassword = await bcrypt.hash(password, 14);
+      console.log(hashedPassword)
       await this.userService.createUser([email, hashedPassword, name, verificationCode.toString(), JSON.stringify(["USER"])] );
       sendMail({
         from: config.get("email"),

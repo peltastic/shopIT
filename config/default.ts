@@ -7,6 +7,7 @@ export default {
     db_user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    database_url: process.env.DB_URL,
     port: process.env.DB_PORT,
     email_service: process.env.EMAIL_SERVICE,
     smtp_host: process.env.SMTP_HOST,

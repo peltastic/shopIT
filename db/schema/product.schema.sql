@@ -1,9 +1,10 @@
+CREATE TYPE category AS ENUM('ech','clothes','cosmetics','food','drinks','wine','tech_accessories'); 
 CREATE TABLE products (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     names VARCHAR(255) NOT NULL,
     descriptions TEXT NOT NULL,
     price INT NOT NULL,
-    category ENUM("tech", "clothes", "cosmetics", "food", "drinks", "wine", "tech accessories"),
+    category category,
     image_url JSON,
     vendor_id INT,
     FOREIGN KEY (vendor_id) REFERENCES vendor_profiles(id),

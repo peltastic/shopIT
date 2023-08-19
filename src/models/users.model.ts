@@ -8,7 +8,8 @@ class UserModel {
     try {
       let conditions: {}[] = [];
       conditions.push(email);
-      let query = `SELECT email, id, passwords, roles, verified FROM ${this.tableName} WHERE email = ?`;
+      let query = `SELECT email, id, passwords, roles, verified FROM users WHERE email = $1`;
+      console.log(query)
       return execute<User>(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);
@@ -66,8 +67,9 @@ class UserModel {
       for (const el of data) {
         conditions.push(el);
       }
+      console.log(conditions)
       let query = `INSERT INTO ${this.tableName} (email, passwords, names, verification_code, roles) 
-      VALUES (?, ?, ?, ?, ?)`;
+      VALUES ($1, $2, $3, $4, $5)`;
       return execute(query, conditions);
     } catch (error) {
       console.error("MySql Query Error", error);

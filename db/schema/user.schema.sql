@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id PRIMARY KEY SERIAL,
     email VARCHAR(50) NOT NULL,
     passwords CHAR(100) NOT NULL,
     roles JSON,
